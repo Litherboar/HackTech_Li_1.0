@@ -1,0 +1,170 @@
+{
+  "name": "HackTech Li - Nueva reserva a Telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reservation-created",
+        "responseMode": "onReceived",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "id": "reservation-created-webhook",
+      "name": "Reserva creada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [260, 300],
+      "webhookId": "hacktech-li-reservation-created",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "HackTech Li Integration Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "reservation-created-event",
+              "leftValue": "={{ $json.body.event }}",
+              "rightValue": "reservation.created",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "only-new-reservations",
+      "name": "¿Es una nueva reserva?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $json.body.client.email }}",
+        "subject": "={{ 'Confirmación de reserva #' + $json.body.reservation.id }}",
+        "message": "={{ 'Hola ' + $json.body.client.full_name + ',\\n\\nTu reserva fue registrada correctamente.\\n\\nServicio: ' + $json.body.service.name + '\\nInicio: ' + $json.body.reservation.start_time + '\\nFin: ' + $json.body.reservation.end_time + '\\nEstado: ' + $json.body.reservation.status + '\\n\\nGracias por reservar con La Fisioterapeuta Li.' }}"
+      },
+      "id": "send-reservation-confirmation-email",
+      "name": "Enviar confirmación por Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1020, 400],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "",
+          "name": "HackTech Li Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "create",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "start": "={{ $json.body.reservation.start_time }}",
+        "end": "={{ $json.body.reservation.end_time }}",
+        "additionalFields": {
+          "summary": "={{ 'Cita - ' + $json.body.service.name + ' - ' + $json.body.client.full_name }}",
+          "description": "={{ 'Reserva #' + $json.body.reservation.id + '\\nCliente: ' + $json.body.client.full_name + '\\nCorreo: ' + $json.body.client.email + '\\nTeléfono: ' + ($json.body.client.phone || 'No registrado') + '\\nServicio: ' + $json.body.service.name + '\\nNotas: ' + ($json.body.reservation.notes || 'Sin notas') }}",
+          "timeZone": "America/Bogota"
+        }
+      },
+      "id": "create-google-calendar-event",
+      "name": "Crear cita en Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [760, 400],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "",
+          "name": "HackTech Li Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "={{ '🗓️ <b>NUEVA RESERVA</b>\\n' + '━━━━━━━━━━━━━━━━━━\\n' + '🔖 <b>Reserva:</b> #' + $json.body.reservation.id + '\\n' + '👤 <b>Cliente:</b> ' + $json.body.client.full_name + '\\n' + '💆 <b>Servicio:</b> ' + $json.body.service.name + '\\n' + '🕐 <b>Horario:</b> ' + $json.body.reservation.start_time + ' - ' + $json.body.reservation.end_time + '\\n' + '📌 <b>Estado:</b> ' + $json.body.reservation.status + '\\n' + '━━━━━━━━━━━━━━━━━━\\n' + '✅ <i>Registrada desde la página web</i>' }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "notify-telegram",
+      "name": "Notificar por Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [760, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "",
+          "name": "HackTech Li Telegram"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Reserva creada": {
+      "main": [
+        [
+          {
+            "node": "¿Es una nueva reserva?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es una nueva reserva?": {
+      "main": [
+        [
+          {
+            "node": "Notificar por Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Crear cita en Google Calendar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar confirmación por Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "hacktech-li-reservation-created-v1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "pinData": {},
+  "tags": []
+}

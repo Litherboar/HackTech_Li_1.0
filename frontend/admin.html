@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - La Fisioterapeuta Li</title>
+    <!-- Ícono de la pestaña (Favicon) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Hoja de Estilos principal -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page">
+
+    <!-- Pantalla de Login (Controlada 100% por JS sin conflictos de clases) -->
+    <div id="adminLoginSection" class="position-fixed top-0 start-0 w-100 h-100 bg-dark" style="z-index: 2000; display: flex; align-items: center; justify-content: center;">
+        <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 w-100 bg-white text-dark mx-3" style="max-width: 420px;">
+            <div class="text-center mb-4">
+                <div class="icon-box bg-primary-subtle text-primary rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="fw-bold text-dark">Acceso Restringido</h3>
+                <p class="text-secondary small">Ingresa las credenciales de administrador para gestionar las reservas.</p>
+            </div>
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                <div class="mb-3">
+                    <label for="adminEmail" class="form-label fw-semibold text-dark small">Correo electrónico</label>
+                    <input type="email" id="adminEmail" class="form-control shadow-none" value="admin@fisioterapeutali.com" autocomplete="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="adminPassword" class="form-label fw-semibold text-dark small">Contraseña</label>
+                    <input type="password" id="adminPassword" class="form-control shadow-none" placeholder="••••••••••••" autocomplete="current-password" required>
+                </div>
+                <div id="loginError" class="text-danger small mb-3" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm hover-lift" id="adminLoginBtn">Ingresar al Panel</button>
+                
+                <!-- BOTÓN PARA VOLVER AL INDEX CORREGIDO PARA MODO OSCURO -->
+                <a href="index.html" class="btn btn-outline-secondary w-100 rounded-pill py-2 mt-2 shadow-sm hover-lift">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Volver al Inicio
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navegación Navbar con efecto Glassmorphism -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-white glass-nav shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-4 text-dark" href="index.html">
+                <img src="logo.png" class="brand-logo me-2" alt="La Fisioterapeuta Li">
+                Panel <span class="text-primary ms-1">Admin</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <!-- Botón de Modo Oscuro -->
+                <button class="btn btn-outline-primary btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-none theme-toggle-btn" id="themeToggleBtn" style="width: 38px; height: 38px;" title="Cambiar Tema">
+                    <i class="fa-solid fa-moon text-primary" id="themeIcon"></i>
+                </button>
+                <a href="index.html" class="btn btn-outline-secondary rounded-pill px-3 btn-sm">Ver Sitio Web</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal del Admin -->
+    <main id="adminDashboardContent" class="container my-5 pt-4" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div class="admin-heading">
+                <span class="admin-eyebrow"><i class="fa-solid fa-shield-halved me-1"></i> Área privada</span>
+                <h2 class="fw-bold text-dark mb-1">Centro de reservas</h2>
+                <p class="text-secondary small mb-0">Control de pacientes, servicios y documentos adjuntos en tiempo real.</p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <!-- NUEVO BOTÓN PARA VOLVER AL INICIO DESDE EL DASHBOARD -->
+                <a href="index.html" class="btn btn-outline-secondary rounded-pill px-3 shadow-sm hover-lift">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Volver al Inicio
+                </a>
+                <button class="btn btn-outline-success rounded-pill px-3 shadow-sm hover-lift" onclick="exportReservationsExcel()">
+                    <i class="fa-solid fa-file-excel me-2"></i> Excel con formato
+                </button>
+                <button class="btn btn-outline-danger rounded-pill px-3 shadow-sm hover-lift" onclick="exportReservationsPDF()">
+                    <i class="fa-solid fa-file-pdf me-2"></i> Exportar PDF
+                </button>
+                <button class="btn btn-primary rounded-pill px-4 shadow-sm hover-lift" onclick="loadAdminReservations()">
+                    <i class="fa-solid fa-rotate-right me-2"></i> Actualizar Listado
+                </button>
+                <button class="btn btn-outline-danger rounded-pill px-3 shadow-sm hover-lift" onclick="handleAdminLogout()" title="Cerrar Sesión">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 mb-4 admin-filter-panel">
+            <div class="card-body p-3 p-md-4">
+                <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1"><i class="fa-solid fa-filter text-primary me-2"></i>Filtrar reservas</h5>
+                        <p class="text-secondary small mb-0">Busca por paciente, correo, servicio o teléfono.</p>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="clearReservationFilters()">
+                        <i class="fa-solid fa-rotate-left me-1"></i> Limpiar
+                    </button>
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-5">
+                        <label for="reservationSearch" class="form-label small fw-semibold text-secondary">Búsqueda</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-secondary"></i></span>
+                            <input type="search" id="reservationSearch" class="form-control shadow-none" placeholder="Nombre, correo, servicio...">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-2">
+                        <label for="reservationStatusFilter" class="form-label small fw-semibold text-secondary">Estado</label>
+                        <select id="reservationStatusFilter" class="form-select shadow-none">
+                            <option value="">Todos</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="confirmed">Confirmadas</option>
+                            <option value="cancelled">Canceladas</option>
+                            <option value="completed">Completadas</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 col-lg-2">
+                        <label for="reservationDateFilter" class="form-label small fw-semibold text-secondary">Fecha</label>
+                        <input type="date" id="reservationDateFilter" class="form-control shadow-none">
+                    </div>
+                    <div class="col-sm-4 col-lg-3 d-flex align-items-end">
+                        <div class="admin-filter-result small text-secondary w-100" id="reservationFilterResult">Mostrando todas las reservas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="py-3 ps-4">Paciente</th>
+                                <th class="py-3">Servicio</th>
+                                <th class="py-3">Fecha y Hora</th>
+                                <th class="py-3">Teléfono</th>
+                                <th class="py-3">Documentos</th>
+                                <th class="py-3">Estado</th>
+                                <th class="py-3 text-center pe-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center text-secondary py-5">
+                                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>Cargando reservas...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="cancelReservationModal" tabindex="-1" aria-labelledby="cancelReservationTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-body text-center p-4 p-md-5">
+                    <div class="admin-confirm-icon bg-danger-subtle text-danger mx-auto mb-3">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-2" id="cancelReservationTitle">¿Cancelar esta reserva?</h4>
+                    <p class="text-secondary mb-4">La reserva quedará marcada como cancelada y no podrá continuar con el proceso de atención.</p>
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Conservar reserva</button>
+                        <button type="button" class="btn btn-danger rounded-pill px-4" id="confirmCancelReservationBtn">
+                            <i class="fa-solid fa-ban me-2"></i>Cancelar reserva
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 text-center mt-5">
+        <div class="container">
+            <p class="mb-0 small text-secondary">&copy; 2026 La Fisioterapeuta Li. Panel Administrativo.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="reservation-config.js"></script>
+    <script src="admin-flow.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

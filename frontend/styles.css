@@ -1,0 +1,760 @@
+/* ==========================================================================
+   PERSONALIZACIÓN DE BOOTSTRAP & VARIABLES
+   ========================================================================== */
+:root {
+  --bs-primary: #0077b6;
+  --bs-primary-rgb: 0, 119, 182;
+  --bs-secondary: #64748b;
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  padding-top: 76px;
+  overflow-x: hidden;
+  background-color: #fcfdfe;
+}
+
+.admin-page {
+  background: linear-gradient(145deg, #f8fbfd 0%, #eef5f8 52%, #f8fbfd 100%);
+}
+
+.admin-page main {
+  min-height: calc(100vh - 150px);
+}
+
+.admin-page .glass-nav {
+  border-bottom-color: rgba(0, 119, 182, 0.12);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06) !important;
+}
+
+.admin-heading {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.admin-heading::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--bs-primary);
+}
+
+.admin-eyebrow {
+  display: block;
+  color: var(--bs-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.admin-page .card {
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06) !important;
+}
+
+.admin-page .table thead th {
+  color: #475569;
+  background: #f1f6f8;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #dbe5ea;
+}
+
+.admin-page .table tbody tr {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-page .table tbody tr:hover {
+  background-color: #f5fafc;
+}
+
+.admin-page .btn {
+  font-weight: 600;
+}
+
+/* Gradiente Azul Profesional para la Sección Hero */
+.hero-gradient {
+  background: linear-gradient(135deg, #0077b6 0%, #03045e 100%) !important;
+}
+
+/* Mantiene las tarjetas de servicios compactas y evita filas con espacios vacíos. */
+.services-section .card {
+  height: auto !important;
+  min-height: 0;
+}
+
+.services-section .card .text-secondary {
+  line-height: 1.55;
+}
+
+/* Glassmorphism Navbar */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Estilos de Modo Oscuro (Dark Mode) */
+body.dark-mode {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .glass-nav {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .navbar-brand, 
+body.dark-mode .nav-link {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .bg-white, 
+body.dark-mode .bg-light {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .card {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.dark-mode .text-dark, 
+body.dark-mode .text-secondary {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode footer {
+  background-color: #090d16 !important;
+}
+
+/* Fix específico de visibilidad de texto en Modo Oscuro (Upload file) */
+body.dark-mode .text-muted,
+body.dark-mode .form-text {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode #resFileName {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode #resFileName.text-success {
+  color: #4ade80 !important; /* Verde claro visible en fondo oscuro */
+}
+
+body.dark-mode .modal-content,
+body.dark-mode .modal-custom,
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .input-group-text {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #94a3b8;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  border-color: var(--bs-primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25) !important;
+}
+
+body.dark-mode .form-select {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+body.dark-mode .border-top,
+body.dark-mode .border-bottom,
+body.dark-mode hr {
+  border-color: #334155 !important;
+}
+
+body.dark-mode .bg-primary-subtle,
+body.dark-mode .alert-info {
+  background-color: #164e63 !important;
+  color: #cffafe !important;
+}
+
+body.dark-mode .table {
+  --bs-table-bg: #1e293b;
+  --bs-table-color: #f8fafc;
+  --bs-table-border-color: #334155;
+  --bs-table-hover-bg: #26364d;
+  --bs-table-hover-color: #fff;
+}
+
+body.dark-mode .table-light {
+  --bs-table-bg: #334155;
+  --bs-table-color: #f8fafc;
+}
+
+body.dark-mode .btn-outline-secondary {
+  --bs-btn-color: #cbd5e1;
+  --bs-btn-border-color: #64748b;
+  --bs-btn-hover-color: #0f172a;
+  --bs-btn-hover-bg: #cbd5e1;
+  --bs-btn-hover-border-color: #cbd5e1;
+}
+
+body.dark-mode .bg-secondary-subtle {
+  background-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .time-slots-container::-webkit-scrollbar-track,
+body.dark-mode .modal-custom .overflow-y-auto::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+/* Micro-interacciones y Animaciones de Portafolio */
+.hover-lift {
+  transition: var(--transition-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(var(--bs-primary-rgb), 0.15) !important;
+}
+
+.transition-hover {
+  transition: var(--transition-smooth);
+}
+
+.transition-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 1rem 2rem rgba(0,0,0,.08)!important;
+}
+
+.feature-card {
+  border: 2px solid var(--bs-primary) !important;
+}
+
+.tracking-wide {
+  letter-spacing: 1.5px;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  animation: heartbeat 2.5s infinite ease-in-out;
+}
+
+.admin-filter-panel {
+  border-left: 4px solid var(--bs-primary) !important;
+}
+
+.admin-filter-result {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0.75rem;
+  border-left: 1px solid #e2e8f0;
+}
+
+.admin-confirm-icon {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.65rem;
+}
+
+body.dark-mode .admin-filter-result {
+  border-left-color: #334155;
+}
+
+body.dark-mode .input-group-text {
+  background-color: #1e293b !important;
+}
+
+@media (max-width: 575.98px) {
+  .admin-filter-result {
+    justify-content: flex-start;
+    border-left: 0;
+    border-top: 1px solid #e2e8f0;
+    padding: 0.75rem 0;
+  }
+
+  body.dark-mode .admin-filter-result {
+    border-top-color: #334155;
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+}
+
+/* Scroll Reveal (Efecto Aparición SPA) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   MODAL DE RESERVAS E INTEGRACIÓN BACKEND (Estilo App/Modal React)
+   ========================================================================== */
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 1rem;
+}
+
+.modal-backdrop-custom.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-custom {
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  transform: scale(0.92) translateY(10px);
+  transition: var(--transition-smooth);
+}
+
+.modal-backdrop-custom.active .modal-custom {
+  transform: scale(1) translateY(0);
+}
+
+/* Feedback Backend */
+.reservation-feedback {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.reservation-feedback-error {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.reservation-feedback-success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slots de Horario */
+.time-slots-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 0.5rem;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 0.25rem;
+}
+
+.slot-btn {
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #212529;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.slot-btn:hover {
+  border-color: var(--bs-primary);
+  color: var(--bs-primary);
+}
+
+.slot-btn-selected {
+  background-color: var(--bs-primary) !important;
+  color: #fff !important;
+  border-color: var(--bs-primary) !important;
+}
+
+/* ==========================================================================
+   REFINAMIENTOS VISUALES (QA) Y SUBIDA DE ARCHIVOS
+   ========================================================================== */
+.modal-custom .overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-custom .overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+.modal-custom .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: var(--bs-secondary);
+  border-radius: 8px;
+}
+
+.modal-custom .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-primary);
+}
+
+#resSubmitBtn {
+  min-width: 180px;
+  justify-content: center;
+}
+
+.icon-box {
+  width: 70px; 
+  height: 70px; 
+  font-size: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .icon-box {
+  transform: scale(1.1);
+}
+
+/* Diseño interactivo Drag & Drop unificado para subir múltiples archivos */
+.file-upload-wrapper {
+  overflow: hidden;
+}
+
+.file-upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.file-upload-design {
+  border: 2px dashed rgba(var(--bs-primary-rgb), 0.3) !important;
+  transition: var(--transition-smooth);
+}
+
+.file-upload-wrapper:hover .file-upload-design {
+  border-color: var(--bs-primary) !important;
+  background-color: rgba(var(--bs-primary-rgb), 0.05) !important;
+}
+
+body.dark-mode .file-upload-design {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-mode .file-upload-wrapper:hover .file-upload-design {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+body.dark-mode.admin-page {
+  background: linear-gradient(145deg, #0f172a 0%, #13283a 52%, #0f172a 100%) !important;
+}
+
+body.dark-mode .admin-page .table thead th,
+body.dark-mode.admin-page .table thead th {
+  background: #263b4d;
+  color: #e2e8f0;
+  border-bottom-color: #3b5265;
+}
+
+body.dark-mode.admin-page .table tbody tr:hover {
+  background-color: #203547;
+}
+
+/* Asistente virtual de la página pública */
+.chatbot {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1500;
+  font-size: 0.92rem;
+}
+
+.chatbot-panel {
+  width: min(360px, calc(100vw - 2rem));
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 119, 182, 0.16);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.2);
+  opacity: 0;
+  transform: translateY(1rem) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.chatbot.is-open .chatbot-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0.9rem;
+  color: #fff;
+  background: linear-gradient(135deg, #0077b6, #023e8a);
+}
+
+.chatbot-status {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.chatbot-status-dot {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  background: #80ed99;
+  vertical-align: 0.06rem;
+}
+
+.chatbot-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.chatbot-header p {
+  margin: 0.2rem 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.78rem;
+}
+
+.chatbot-close,
+.chatbot-toggle,
+.chatbot-form button {
+  border: 0;
+  cursor: pointer;
+}
+
+.chatbot-close {
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.chatbot-messages {
+  display: flex;
+  max-height: 280px;
+  min-height: 132px;
+  flex-direction: column;
+  gap: 0.7rem;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #f7fbfd;
+}
+
+.chatbot-message {
+  max-width: 88%;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.85rem;
+  line-height: 1.4;
+}
+
+.chatbot-message.bot {
+  align-self: flex-start;
+  color: #164e63;
+  background: #dff5fb;
+  border-bottom-left-radius: 0.2rem;
+}
+
+.chatbot-message.user {
+  align-self: flex-end;
+  color: #fff;
+  background: #0077b6;
+  border-bottom-right-radius: 0.2rem;
+}
+
+.chatbot-typing {
+  color: #64748b !important;
+  font-style: italic;
+}
+
+.chatbot-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem 0;
+  background: #fff;
+}
+
+.chatbot-quick-actions button {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgba(0, 119, 182, 0.25);
+  border-radius: 2rem;
+  color: #006494;
+  background: #fff;
+  font-size: 0.75rem;
+}
+
+.chatbot-quick-actions button:hover {
+  background: #e6f7fb;
+}
+
+.chatbot-form {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem;
+  background: #fff;
+}
+
+.chatbot-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d5e2e8;
+  border-radius: 0.55rem;
+  outline: 0;
+}
+
+.chatbot-form input:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+.chatbot-form button {
+  width: 2.5rem;
+  border-radius: 0.55rem;
+  color: #fff;
+  background: var(--bs-primary);
+}
+
+.chatbot-toggle {
+  position: relative;
+  display: grid;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-left: auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #0077b6;
+  box-shadow: 0 0.7rem 1.5rem rgba(0, 119, 182, 0.35);
+  font-size: 1.35rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.chatbot-toggle:hover {
+  transform: translateY(-3px);
+  background: #023e8a;
+}
+
+.chatbot-unread {
+  position: absolute;
+  top: -0.1rem;
+  right: -0.1rem;
+  display: grid;
+  width: 1.15rem;
+  height: 1.15rem;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  background: #ef476f;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+body.dark-mode .chatbot-panel,
+body.dark-mode .chatbot-quick-actions,
+body.dark-mode .chatbot-form {
+  background: #1e293b;
+}
+
+body.dark-mode .chatbot-messages {
+  background: #0f172a;
+}
+
+body.dark-mode .chatbot-message.bot {
+  color: #cffafe;
+  background: #164e63;
+}
+
+body.dark-mode .chatbot-quick-actions button,
+body.dark-mode .chatbot-form input {
+  color: #e2e8f0;
+  background: #27364b;
+  border-color: #475569;
+}
+
+@media (max-width: 575.98px) {
+  .chatbot {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .chatbot-panel {
+    margin-bottom: 0.65rem;
+  }
+}
